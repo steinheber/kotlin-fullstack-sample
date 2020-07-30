@@ -24,7 +24,7 @@ fun Route.index(storage: ThinkterStorage) {
             val user = call.sessionOrNull<Session>()?.let { storage.user(it.userId) }
             val top = storage.top(10).map(storage::getThought)
             val latest = storage.latest(10).map(storage::getThought)
-
+            val unused = storage.latest(10).map(storage::getThought)
             call.response.pipeline.intercept(ApplicationResponsePipeline.After) {
                 val etagString = user?.userId + "," + top.joinToString { it.id.toString() } + latest.joinToString { it.id.toString() }
                 call.response.etag(etagString)
