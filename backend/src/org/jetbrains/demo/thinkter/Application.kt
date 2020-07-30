@@ -17,7 +17,7 @@ data class Session(val userId: String)
 
 fun Application.main() {
     val storage = ThinkterDatabase(/*JDBCConnection.Companion.create(H2Dialect, pool)*/)
-
+    val storageNpe = null 
     install(DefaultHeaders)
     install(CallLogging)
     install(ConditionalHeaders)
@@ -31,6 +31,7 @@ fun Application.main() {
     withSessions<Session> {
         withCookieByValue {
             settings = SessionCookiesSettings(transformers = listOf(SessionCookieTransformerMessageAuthentication(hashKey)))
+            storageNpe.dontDoThis
         }
     }
 
